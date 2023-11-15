@@ -2,7 +2,7 @@
 using UI;
 
 Console.Clear();
-SetUpDB(); // Comment out after setting up DB connecting to the data base
+//SetUpDB(); // Comment out after setting up DB connecting to the data base
 
 JobSeekerRepository jsr = new();
 
@@ -10,11 +10,11 @@ JobSeekerRepository jsr = new();
 // menu.RunMainMenu();
 
 // Add 3 jobseekers
-for (int i = 0; i < 3; i++)
-{
-    JobSeeker j = Create.JobSeeker();
-    j.Id = jsr.AddJobSeeker(j);
-}
+// for (int i = 0; i < 3; i++)
+// {
+//     JobSeeker j = Create.JobSeeker();
+//     j.Id = jsr.AddJobSeeker(j);
+// }
 
 // Get all jobseekers and display them
 IEnumerable<JobSeeker> jobSeekers = jsr.GetAllJobSeekers();

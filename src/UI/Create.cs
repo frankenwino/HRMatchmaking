@@ -14,6 +14,9 @@ public static class Create
         string telephone = ConsoleInput.GetString("Enter phonenumber:");
         string email = ConsoleInput.GetString("Enter email:");
 
+        System.Console.WriteLine($"Telephone: {telephone}");
+
+
         JobSeeker j = new JobSeeker(name, dateOfBirth, personNumber, cityId, telephone, email);
 
         return j;

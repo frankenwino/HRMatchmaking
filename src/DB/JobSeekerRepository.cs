@@ -21,7 +21,7 @@ public class JobSeekerRepository : IJobSeekerRepository
     {
         ConnectToDatabase();
 
-        string sqlCommand = "INSERT INTO jobseeker (name) VALUES (@Name);";
+        string sqlCommand = $"INSERT INTO jobseeker (name, date_of_birth, person_number, city_id, email, telephone) VALUES (@Name, '{jobSeeker.DateOfBirth}', '{jobSeeker.PersonNumber.PNumber}', @CityId, @Email, @Telephone);";
         connection.Execute(sqlCommand, jobSeeker);
 
         int jobseekerId = connection.Execute("SELECT SCOPE_IDENTITY() AS LastInsertedID;");
@@ -43,14 +43,14 @@ public class JobSeekerRepository : IJobSeekerRepository
             System.Console.WriteLine(ex.Message);
         } */
 
-        JobSeeker jobSeeker = connection.QuerySingle<JobSeeker>($"SELECT id, name FROM jobseeker WHERE jobseeker.id = {jobSeeker_id}");
+        JobSeeker jobSeeker = connection.QuerySingle<JobSeeker>($"SELECT name, date_of_birth, person_number, city_id, email, telephone FROM jobseeker WHERE jobseeker.id = {jobSeeker_id}");
         return jobSeeker;
     }
 
     public IEnumerable<JobSeeker> GetAllJobSeekers()
     {
         ConnectToDatabase();
-        IEnumerable<JobSeeker> jobSeekers = connection.Query<JobSeeker>("SELECT id, name FROM jobseeker");
+        IEnumerable<JobSeeker> jobSeekers = connection.Query<JobSeeker>("SELECT name, date_of_birth, person_number, city_id, email, telephone FROM jobseeker");
 
         return jobSeekers;
     }

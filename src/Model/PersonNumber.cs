@@ -35,6 +35,6 @@ public class PersonNumber
         string month = Zeroer(DateOfBirth.Month);
         string day = Zeroer(DateOfBirth.Day);
 
-        return $"{DateOfBirth.Year}{month}{day}-{FourLastNumbers}";
+        return $"{DateOfBirth.Year}{month}{day}{FourLastNumbers}";
     }
 }
