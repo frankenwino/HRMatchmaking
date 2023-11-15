@@ -2,10 +2,7 @@
 using UI;
 
 Console.Clear();
-
-/* DBSetup dbs = new();
-dbs.DropAllTables();
-dbs.CreateAllTables(); */
+SetUpDB(); // Comment out after setting up DB
 
 JobSeekerRepository jsr = new();
 
@@ -32,3 +29,10 @@ System.Console.WriteLine();
 JobSeeker k = jsr.GetJobSeekerById(1);
 System.Console.WriteLine($"Jobseeker with{k.Id}: {k.Name}");
 
+void SetUpDB()
+{
+    DBSetup dbs = new();
+    dbs.DropAllTables();
+    dbs.CreateAllTables();
+    Environment.Exit(0);
+}
