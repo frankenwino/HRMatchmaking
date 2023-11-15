@@ -1,11 +1,11 @@
 public static class Create
 {
-    public static Jobseeker Jobseeker()
+    public static JobSeeker JobSeeker()
     {
         System.Console.Write("Enter name: ");
         string name = Console.ReadLine();
 
-        Jobseeker j = new Jobseeker(name);
+        JobSeeker j = new JobSeeker(name);
 
         return j;
     }

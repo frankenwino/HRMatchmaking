@@ -1,5 +1,7 @@
-interface IJobseekerRepository
+public interface IJobSeekerRepository : IRepository
 {
-    int AddJobseeker(Jobseeker jobseeker);
-    int GetJobSeeker(int jobseeker_id);
+    void ConnectToDatabase();
+    int AddJobSeeker(JobSeeker jobSeeker);
+    JobSeeker GetJobSeekerById(int jobseeker_id);
+    IEnumerable<JobSeeker> GetAllJobSeekers();
 }

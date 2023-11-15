@@ -1,10 +1,18 @@
-public class Jobseeker
+using System.Collections;
+
+public class JobSeeker
 {
     public int Id { get; set; }
     public string Name { get; set; }
 
-    public Jobseeker(string name)
+    public JobSeeker(string name)
     {
+        Name = name;
+    }
+
+    public JobSeeker(int id, string name)
+    {
+        Id = id;
         Name = name;
     }
 }

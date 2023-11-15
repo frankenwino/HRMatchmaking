@@ -1,38 +1,57 @@
 using System.Data;
-// using Microsoft.Data.SqlClient;
 using Dapper;
 using System.Data.SqlClient;
 
-public class JobseekerRepository// : IJobseekerRepository
+public class JobSeekerRepository : IJobSeekerRepository
 {
     private IDbConnection connection;
 
-    public JobseekerRepository(string connectionString = "Server=localhost,1433;User=sa;Password=apA123!#!;Database=HRMatchmakingLocal")
+    public JobSeekerRepository(string connectionString = "Server=localhost,1433;User=sa;Password=apA123!#!;Database=HRMatchmakingLocal")
     {
         connection = new SqlConnection(connectionString);
     }
 
-    private void Open()
+    public void ConnectToDatabase()
     {
         if (connection.State != ConnectionState.Open)
             connection.Open();
     }
 
-    public int AddJobseeker(Jobseeker jobseeker)
+    public int AddJobSeeker(JobSeeker jobSeeker)
     {
-        Open();
-        string sqlCommand = "INSERT INTO job_seeker (name) VALUES (@Name)";
+        ConnectToDatabase();
 
-        connection.Execute(sqlCommand, jobseeker);
+        string sqlCommand = "INSERT INTO jobseeker (name) VALUES (@Name);";
+        connection.Execute(sqlCommand, jobSeeker);
 
-        return 1;
+        int jobseekerId = connection.Execute("SELECT SCOPE_IDENTITY() AS LastInsertedID;");
+
+        return jobseekerId;
     }
 
-    public IEnumerable<Jobseeker> GetAllJobseekers()
+    public JobSeeker GetJobSeekerById(int jobSeeker_id)
     {
-        Open();
-        IEnumerable<Jobseeker> jobseekers = connection.Query<Jobseeker>("SELECT id, name from job_seeker;");
+        ConnectToDatabase();
 
-        return jobseekers;
+        /* try
+        {
+            JobSeeker jobSeeker = connection.QuerySingle<JobSeeker>($"SELECT id, name FROM jobseeker WHERE jobseeker.id = {jobSeeker_id}");
+            return jobSeeker;
+        }
+        catch (System.InvalidOperationException ex)
+        {
+            System.Console.WriteLine(ex.Message);
+        } */
+
+        JobSeeker jobSeeker = connection.QuerySingle<JobSeeker>($"SELECT id, name FROM jobseeker WHERE jobseeker.id = {jobSeeker_id}");
+        return jobSeeker;
+    }
+
+    public IEnumerable<JobSeeker> GetAllJobSeekers()
+    {
+        ConnectToDatabase();
+        IEnumerable<JobSeeker> jobSeekers = connection.Query<JobSeeker>("SELECT id, name FROM jobseeker");
+
+        return jobSeekers;
     }
 }
