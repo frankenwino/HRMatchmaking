@@ -38,7 +38,7 @@ public class DBSetup
         name VARCHAR(32) UNIQUE NOT NULL
     );";
 
-    private string createJobseekerTable = @"
+    /* private string createJobseekerTable = @"
     CREATE TABLE jobseeker (
         id INT PRIMARY KEY IDENTITY(1,1),
         name VARCHAR(64) NOT NULL,
@@ -48,13 +48,24 @@ public class DBSetup
         email VARCHAR(64),
         telephone VARCHAR(32) NOT NULL,
         FOREIGN KEY (city_id) REFERENCES city (id)
-    );";
+    );"; */
 
     /* private string createJobseekerTable = @"
     CREATE TABLE jobseeker (
         id INT PRIMARY KEY IDENTITY(1,1),
         name VARCHAR(64) NOT NULL
     );"; */
+
+    private string createJobseekerTable = @"
+    CREATE TABLE jobseeker (
+        id INT PRIMARY KEY IDENTITY(1,1),
+        name VARCHAR(64) NOT NULL,
+        date_of_birth DATE NOT NULL,
+        person_number VARCHAR(12) UNIQUE NOT NULL,
+        city_id INT NOT NULL,
+        email VARCHAR(64),
+        telephone VARCHAR(32) NOT NULL,
+    );";
 
     private string createIndustryTable = @"
     CREATE TABLE industry (
