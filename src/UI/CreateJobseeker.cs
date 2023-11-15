@@ -1,8 +1,8 @@
 public class CreateJobseeker
 {
-    //Console.WriteLine("Enter your name:");
-    string name = Console.ReadLine();
+    // Console.WriteLine("Enter your name:");
+    // string name = Console.ReadLine();
 
-    Jobseeker j = new Jobseeker(name);
+    // Jobseeker j = new Jobseeker(name);
 
 }

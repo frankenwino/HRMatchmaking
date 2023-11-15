@@ -1,12 +1,13 @@
 using System.Data;
-using Microsoft.Data.SqlClient;
+// using Microsoft.Data.SqlClient;
 using Dapper;
+using System.Data.SqlClient;
 
-public class JobSeekerRepository
+public class JobseekerRepository// : IJobseekerRepository
 {
     private IDbConnection connection;
 
-    public JobSeekerRepository(string connectionString = "Server=localhost,1433;User=sa;Password=apA123!#!;Database=HRMatchmakingLocal")
+    public JobseekerRepository(string connectionString = "Server=localhost,1433;User=sa;Password=apA123!#!;Database=HRMatchmakingLocal")
     {
         connection = new SqlConnection(connectionString);
     }
@@ -17,20 +18,21 @@ public class JobSeekerRepository
             connection.Open();
     }
 
-    public int AddJobseeker(JobSeeker jobSeeker)
+    public int AddJobseeker(Jobseeker jobseeker)
     {
         Open();
-        string sqlCommand = "INSERT INTO job_seeker (name) VALUES (@Name);SELECT SCOPE_IDENTITY;";
-        int id = connection.QuerySingle<int>(sqlCommand, jobSeeker);
+        string sqlCommand = "INSERT INTO job_seeker (name) VALUES (@Name)";
 
-        return id;
+        connection.Execute(sqlCommand, jobseeker);
+
+        return 1;
     }
 
-    public IEnumerable<JobSeeker> GetAllJobSeekers()
+    public IEnumerable<Jobseeker> GetAllJobseekers()
     {
         Open();
-        IEnumerable<JobSeeker> jobSeekers = connection.Query<JobSeeker>("SELECT id, name from job_seeker;");
+        IEnumerable<Jobseeker> jobseekers = connection.Query<Jobseeker>("SELECT id, name from job_seeker;");
 
-        return jobSeekers;
+        return jobseekers;
     }
 }

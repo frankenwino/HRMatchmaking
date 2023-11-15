@@ -1,2 +1,6 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿Jobseeker j = Create.Jobseeker();
+System.Console.WriteLine($"Name: {j.Name}");
+
+JobseekerRepository jsr = new();
+j.Id = jsr.AddJobseeker(j);
+
