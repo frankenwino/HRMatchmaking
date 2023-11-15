@@ -2,7 +2,7 @@
 using UI;
 
 Console.Clear();
-SetUpDB(); // Comment out after setting up DB
+SetUpDB(); // Comment out after setting up DB connecting to the data base
 
 JobSeekerRepository jsr = new();
 
