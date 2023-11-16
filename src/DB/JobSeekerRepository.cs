@@ -21,7 +21,7 @@ public class JobSeekerRepository : IJobSeekerRepository
     {
         ConnectToDatabase();
 
-        string sqlCommand = $"INSERT INTO jobseeker (name, date_of_birth, person_number, city_id, email, telephone) VALUES (@Name, '{jobSeeker.DateOfBirth}', '{jobSeeker.PersonNumber.PNumber}', @CityId, @Email, @Telephone);";
+        string sqlCommand = $"INSERT INTO jobseeker (name, date_of_birth, person_number, city_id, email, telephone) VALUES (@Name, '{jobSeeker.DateOfBirth}', @PersonNumber, @CityId, @Email, @Telephone);";
         connection.Execute(sqlCommand, jobSeeker);
 
         int jobseekerId = connection.Execute("SELECT SCOPE_IDENTITY() AS LastInsertedID;");
@@ -29,29 +29,25 @@ public class JobSeekerRepository : IJobSeekerRepository
         return jobseekerId;
     }
 
-    public JobSeeker GetJobSeekerById(int jobSeeker_id)
+    public JobSeeker GetJobSeekerById(int jobSeekerId)
     {
         ConnectToDatabase();
 
-        /* try
-        {
-            JobSeeker jobSeeker = connection.QuerySingle<JobSeeker>($"SELECT id, name FROM jobseeker WHERE jobseeker.id = {jobSeeker_id}");
-            return jobSeeker;
-        }
-        catch (System.InvalidOperationException ex)
-        {
-            System.Console.WriteLine(ex.Message);
-        } */
+        JobSeeker jobSeeker = connection.QuerySingle<JobSeeker>($"SELECT id AS Id, name AS Name, date_of_birth AS DateOfBirth, person_number AS PersonNumber, city_id AS CityId, telephone AS Telephone, email AS Email FROM jobseeker WHERE jobseeker.id = {jobSeekerId}");
 
-        JobSeeker jobSeeker = connection.QuerySingle<JobSeeker>($"SELECT name, date_of_birth, person_number, city_id, email, telephone FROM jobseeker WHERE jobseeker.id = {jobSeeker_id}");
         return jobSeeker;
     }
 
     public IEnumerable<JobSeeker> GetAllJobSeekers()
     {
         ConnectToDatabase();
-        IEnumerable<JobSeeker> jobSeekers = connection.Query<JobSeeker>("SELECT name, date_of_birth, person_number, city_id, email, telephone FROM jobseeker");
+
+        // IEnumerable<JobSeeker> jobSeekers = connection.Query<JobSeeker>("SELECT id, name, date_of_birth, person_number, city_id, telephone, email FROM jobseeker");
+        IEnumerable<JobSeeker> jobSeekers = connection.Query<JobSeeker>(
+            "SELECT id AS Id, name AS Name, CAST(date_of_birth AS date) AS DateOfBirth, person_number AS PersonNumber, city_id AS CityId, telephone AS Telephone, email AS Email FROM jobseeker");
 
         return jobSeekers;
     }
 }
+
+// CAST(date_of_birth AS DateOfBirth)

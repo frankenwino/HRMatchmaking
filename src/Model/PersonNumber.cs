@@ -1,13 +1,13 @@
 public class PersonNumber
 {
-    public DateOnly DateOfBirth { get; set; }
+    public DateTime DateOfBirth { get; set; }
     public string FourLastNumbers { get; set; }
     public string PNumber
     {
         get { return GetPersonNumber(); }
     }
 
-    public PersonNumber(DateOnly dateOfBirth, string fourLastNumbers)
+    public PersonNumber(DateTime dateOfBirth, string fourLastNumbers)
     {
         DateOfBirth = dateOfBirth;
         FourLastNumbers = fourLastNumbers;
@@ -36,5 +36,10 @@ public class PersonNumber
         string day = Zeroer(DateOfBirth.Day);
 
         return $"{DateOfBirth.Year}{month}{day}{FourLastNumbers}";
+    }
+
+    public override string ToString()
+    {
+        return GetPersonNumber().ToString();
     }
 }
