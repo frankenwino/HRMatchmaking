@@ -28,6 +28,4 @@ public class Employer
         Email = email;
         CityId = cityId;
     }
-
-
 }
