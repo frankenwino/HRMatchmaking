@@ -1,54 +1,106 @@
 ﻿using DB.Setup;
 using UI;
 using Model;
+using Spectre.Console;
 
 Console.Clear();
-SetUpDB(); // Comment out after setting up DB connecting to the data base
+// SetUpDB(); // Comment out after setting up DB connecting to the data base
 
 JobSeekerRepository jsr = new();
+EmployerRepository er = new();
 
 // Menu menu = new(jsr);
 // menu.RunMainMenu();
 
-// Add some jobseekers
-// for (int i = 0; i < 2; i++)
-// {
-//     JobSeeker j = Create.JobSeeker();
-//     j.Id = jsr.AddJobSeeker(j);
-// }
 
-// JobSeeker j = Create.JobSeeker();
-/* System.Console.WriteLine(j.Id);
-System.Console.WriteLine(j.PersonNumber);
-System.Console.WriteLine(j.CityId);
-System.Console.WriteLine(j.Telephone);
-System.Console.WriteLine(j.Email); */
-// j.Id = jsr.AddJobSeeker(j);
+// Query database and display results
+DisplayAllJobSeekers();
+DisplayOneJobSeeker();
+DisplayAllEmployers();
+DisplayOneEmployer();
+Environment.Exit(0);
 
-// Get all jobseekers and display them
-IEnumerable<JobSeeker> jobSeekers = jsr.GetAllJobSeekers();
-System.Console.WriteLine("All Jobseekers in DB");
-foreach (JobSeeker jobSeeker in jobSeekers)
+
+Table CreateSpectreTable(List<string> columns)
 {
-    System.Console.WriteLine(jobSeeker.Id);
-    System.Console.WriteLine(jobSeeker.Name);
-    System.Console.WriteLine(jobSeeker.PersonNumber);
-    System.Console.WriteLine(jobSeeker.CityId);
-    System.Console.WriteLine(jobSeeker.Telephone);
-    System.Console.WriteLine(jobSeeker.Email);
-    System.Console.WriteLine();
-}
-System.Console.WriteLine();
+    Table table = new Table();
+    foreach (string column in columns)
+    {
+        table.AddColumn(column);
+    }
 
-// Get jobseeker with id 1
-// JobSeeker k = jsr.GetJobSeekerById(2);
-// System.Console.WriteLine($"Jobseeker with id {k.Id}: {k.Name} {k.PersonNumber}");
-// System.Console.WriteLine(k.Id);
-// System.Console.WriteLine(k.Name);
-// System.Console.WriteLine(k.PersonNumber);
-// System.Console.WriteLine(k.CityId);
-// System.Console.WriteLine(k.Telephone);
-// System.Console.WriteLine(k.Email);
+    return table;
+}
+
+void DisplayAllJobSeekers()
+{
+    // Set up table
+    List<string> columns = new List<string> { "Id", "Name", "PersonNumber", "CityId", "Telephone", "Email" };
+    var table = CreateSpectreTable(columns);
+
+    // Get jobseekers
+    IEnumerable<JobSeeker> jobSeekers = jsr.GetAllJobSeekers();
+
+    // Add JobSeeker data to table
+    foreach (JobSeeker jobSeeker in jobSeekers)
+    {
+        table.AddRow($"{jobSeeker.Id}", $"{jobSeeker.Name}", $"{jobSeeker.PersonNumber}", $"{jobSeeker.CityId}", $"{jobSeeker.Telephone}", $"{jobSeeker.Email}");
+    }
+
+    // Display Jobseekers table
+    System.Console.WriteLine("All Jobseekers in DB");
+    AnsiConsole.Write(table);
+}
+
+void DisplayOneJobSeeker(int id = 1)
+{
+    // Set up table
+    List<string> columns = new List<string> { "Id", "Name", "PersonNumber", "CityId", "Telephone", "Email" };
+    var table = CreateSpectreTable(columns);
+
+    // Get jobseeker with id jobSeekerId
+    JobSeeker jobSeeker = jsr.GetJobSeekerById(id);
+    table.AddRow($"{jobSeeker.Id}", $"{jobSeeker.Name}", $"{jobSeeker.PersonNumber}", $"{jobSeeker.CityId}", $"{jobSeeker.Telephone}", $"{jobSeeker.Email}");
+
+    // Display Jobseekers table
+    System.Console.WriteLine($"Jobseeker with id {id}");
+    AnsiConsole.Write(table);
+}
+
+void DisplayAllEmployers()
+{
+    // Set up table
+    List<string> columns = new List<string> { "Id", "Name", "Org. Number", "CityId", "IndustryId", "Email" };
+    var table = CreateSpectreTable(columns);
+
+    // Get all employers
+    IEnumerable<Employer> employers = er.GetAllEmployers();
+
+    // Add employer data to table
+    foreach (Employer employer in employers)
+    {
+        table.AddRow($"{employer.Id}", $"{employer.Name}", $"{employer.OrganisationNumber}", $"{employer.CityId}", $"{employer.IndustryId}", $"{employer.Email}");
+    }
+
+    // Display employers
+    System.Console.WriteLine("All Employers in DB");
+    AnsiConsole.Write(table);
+}
+
+void DisplayOneEmployer(int id = 1)
+{
+    // Set up table
+    List<string> columns = new List<string> { "Id", "Name", "Org. Number", "CityId", "IndustryId", "Email" };
+    var table = CreateSpectreTable(columns);
+
+    // Get jobseeker with id jobSeekerId
+    Employer employer = er.GetEmployerById(id);
+    table.AddRow($"{employer.Id}", $"{employer.Name}", $"{employer.OrganisationNumber}", $"{employer.CityId}", $"{employer.IndustryId}", $"{employer.Email}");
+
+    // Display Jobseekers table
+    System.Console.WriteLine($"Employer with id {id}");
+    AnsiConsole.Write(table);
+}
 
 void SetUpDB()
 {

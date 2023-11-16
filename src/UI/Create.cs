@@ -26,7 +26,7 @@ public static class Create
         int industryId = ConsoleInput.GetInt("Enter industry id");
         // string industry = ConsoleInput.GetString("Enter industry");
         string email = ConsoleInput.GetString("Enter email");
-        string city = ConsoleInput.GetString("Enter city");
+        // string city = ConsoleInput.GetString("Enter city");
         int cityId = ConsoleInput.GetInt("Enter city id");
 
         // Employer e = new Employer(name, organisationNumber, industry, industryId, email, city, cityId);

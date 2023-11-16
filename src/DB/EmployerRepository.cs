@@ -44,8 +44,9 @@ public class EmployerRepository : IEmployerRepository
         ConnectToDatabase();
 
         IEnumerable<Employer> Employers = connection.Query<Employer>(
-            "SELECT id AS Id, name AS Name, organisation_number AS OrganisationNumber, city_id AS CityId, industry_id AS IndustryId, email AS Email");
+            "SELECT id AS Id, name AS Name, organisation_number AS OrganisationNumber, city_id AS CityId, industry_id AS IndustryId, email AS Email FROM employer");
 
         return Employers;
+
     }
 }
