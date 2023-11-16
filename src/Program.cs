@@ -4,7 +4,7 @@ using Model;
 using Spectre.Console;
 
 Console.Clear();
-// SetUpDB(); // Comment out after setting up DB connecting to the data base
+SetUpDB(); // Comment out after setting up DB connecting to the data base
 
 JobSeekerRepository jsr = new();
 EmployerRepository er = new();
@@ -104,18 +104,27 @@ void DisplayOneEmployer(int id = 1)
 
 void SetUpDB()
 {
+    // Create tables
     DBSetup dbs = new();
     dbs.DropAllTables();
     dbs.CreateAllTables();
 
+
     PopulateDB popDb = new();
+    // Add 'enums' to database
     popDb.AddCities();
     popDb.AddIndustries();
     popDb.AddVehicleLicenses();
+    popDb.AddEducationLevels();
+    popDb.AddLanguages();
+    popDb.AddLanguageLevels();
+    popDb.AddWorkHours();
 
+    // Add dummy data to database
     popDb.AddJobSeekers(10);
-    popDb.AddJobEmployers(10);
-
+    popDb.AddEmployers(10);
+    // Add Job
+    // Add 
 
     System.Console.WriteLine("Comment out the line calling SetUpDB() - on line 6 or so.");
     Environment.Exit(0);

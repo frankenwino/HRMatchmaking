@@ -1,5 +1,4 @@
 namespace DB.Setup;
-
 using System.Data.SqlClient;
 using Dapper;
 
@@ -212,6 +211,7 @@ public class DBSetup
             System.Console.WriteLine("All existing tables dropped");
         }
     }
+
     public void CreateAllTables()
     {
         List<string> createTableSqlCommands = new();
@@ -221,25 +221,24 @@ public class DBSetup
         createTableSqlCommands.Add(createJobseekerTable);
         createTableSqlCommands.Add(createIndustryTable);
         createTableSqlCommands.Add(createEmployerTable);
-        // createTableSqlCommands.Add(createJobHistoryTable);
-        // createTableSqlCommands.Add(createSubjectTable);
-        // createTableSqlCommands.Add(createEducationLevel);
-        // createTableSqlCommands.Add(createSubjectToEducationLevel);
-        // createTableSqlCommands.Add(createLanguageTable);
-        // createTableSqlCommands.Add(createLanguageLevelTable);
-        // createTableSqlCommands.Add(createLanguageToJobseekerTable);
-        // createTableSqlCommands.Add(createSkillTable);
-        // createTableSqlCommands.Add(createSkillToJobseekerTable);
-        // createTableSqlCommands.Add(createVehicleLicenseToJobseekerTable);
-        // createTableSqlCommands.Add(createWorkHoursTable);
-        // createTableSqlCommands.Add(createJobTable);
-        // createTableSqlCommands.Add(createSkillToJobTable);
+        createTableSqlCommands.Add(createEducationLevel);
+        createTableSqlCommands.Add(createSubjectTable);
+        createTableSqlCommands.Add(createJobHistoryTable);
+        createTableSqlCommands.Add(createSubjectToEducationLevel);
+        createTableSqlCommands.Add(createLanguageTable);
+        createTableSqlCommands.Add(createLanguageLevelTable);
+        createTableSqlCommands.Add(createLanguageToJobseekerTable);
+        createTableSqlCommands.Add(createSkillTable);
+        createTableSqlCommands.Add(createSkillToJobseekerTable);
+        createTableSqlCommands.Add(createVehicleLicenseToJobseekerTable);
+        createTableSqlCommands.Add(createWorkHoursTable);
+        createTableSqlCommands.Add(createJobTable);
+        createTableSqlCommands.Add(createSkillToJobTable);
 
         DatabaseConnectionManager dbConnectionManager = new();
 
         using (SqlConnection connection = dbConnectionManager.GetOpenConnection())
         {
-
             foreach (string sql in createTableSqlCommands)
             {
                 // System.Console.WriteLine(sql);

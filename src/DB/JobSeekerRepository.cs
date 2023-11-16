@@ -35,7 +35,6 @@ public class JobSeekerRepository : IJobSeekerRepository
         ConnectToDatabase();
 
         JobSeeker jobSeeker = connection.QuerySingle<JobSeeker>($"SELECT id AS Id, name AS Name, date_of_birth AS DateOfBirth, person_number AS PersonNumber, city_id AS CityId, telephone AS Telephone, email AS Email FROM jobseeker WHERE jobseeker.id = {jobSeekerId}");
-        // JobSeeker jobSeeker = connection.QuerySingle<JobSeeker>($"SELECT id, name, date_of_birth, person_number, city_id, telephone, email FROM jobseeker WHERE jobseeker.id = {jobSeekerId}");
 
         return jobSeeker;
     }
@@ -44,12 +43,9 @@ public class JobSeekerRepository : IJobSeekerRepository
     {
         ConnectToDatabase();
 
-        // IEnumerable<JobSeeker> jobSeekers = connection.Query<JobSeeker>("SELECT id, name, date_of_birth, person_number, city_id, telephone, email FROM jobseeker");
         IEnumerable<JobSeeker> jobSeekers = connection.Query<JobSeeker>(
             "SELECT id AS Id, name AS Name, CAST(date_of_birth AS date) AS DateOfBirth, person_number AS PersonNumber, city_id AS CityId, telephone AS Telephone, email AS Email FROM jobseeker");
 
         return jobSeekers;
     }
 }
-
-// CAST(date_of_birth AS DateOfBirth)

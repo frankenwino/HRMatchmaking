@@ -1,5 +1,4 @@
 namespace DB.Setup;
-// using Faker;
 using System.Data.SqlClient;
 using Dapper;
 using Model;
@@ -12,8 +11,6 @@ public class PopulateDB
     {
         random = new Random();
     }
-
-
 
     public void AddCities()
     {
@@ -104,8 +101,6 @@ public class PopulateDB
         System.Console.WriteLine($"{rowsAffected} rows affected");
     }
 
-
-
     public void AddIndustries()
     {
         List<string> industries = new List<string> {
@@ -149,7 +144,6 @@ public class PopulateDB
         System.Console.WriteLine("Populating industry table");
         System.Console.WriteLine($"{rowsAffected} rows affected");
     }
-
 
     public void AddVehicleLicenses()
     {
@@ -202,6 +196,160 @@ public class PopulateDB
         System.Console.WriteLine($"{rowsAffected} rows affected");
     }
 
+    public void AddEducationLevels()
+    {
+        List<string> educationLevels = new List<string> {
+            "Doctoral", "Högskola", "Yrkeshögskola", "Folkhögskola",
+            "Gymnasium",  "Certification", "Other"
+         };
+
+        int rowsAffected = 0;
+
+        DatabaseConnectionManager dbConnectionManager = new();
+
+        using (SqlConnection connection = dbConnectionManager.GetOpenConnection())
+        {
+            foreach (string educationLevel in educationLevels)
+            {
+                EducationLevel edLevel = new EducationLevel(educationLevel);
+                try
+                {
+                    string sqlcode = $"INSERT INTO education_level(name) VALUES (@Name)";
+                    int count = connection.Execute(sqlcode, edLevel);
+                    rowsAffected += count;
+                }
+                catch (System.Data.SqlClient.SqlException ex)
+                {
+                    if (ex.Number == 2601 || ex.Number == 2627)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    else
+                    {
+                        Console.WriteLine($"An SqlException occurred: {ex.Message}");
+                    }
+                }
+            }
+        }
+        System.Console.WriteLine("Populating education_level table");
+        System.Console.WriteLine($"{rowsAffected} rows affected");
+    }
+
+    public void AddLanguageLevels()
+    {
+        List<string> levels = new List<string> {
+            "Fluent", "Conversational", "Basic"
+            };
+
+        int rowsAffected = 0;
+
+        DatabaseConnectionManager dbConnectionManager = new();
+
+        using (SqlConnection connection = dbConnectionManager.GetOpenConnection())
+        {
+            foreach (string l in levels)
+            {
+                LanguageLevel newLevel = new LanguageLevel(l);
+                try
+                {
+                    string sqlcode = $"INSERT INTO language_level(name) VALUES (@Name)";
+                    int count = connection.Execute(sqlcode, newLevel);
+                    rowsAffected += count;
+                }
+                catch (System.Data.SqlClient.SqlException ex)
+                {
+                    if (ex.Number == 2601 || ex.Number == 2627)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    else
+                    {
+                        Console.WriteLine($"An SqlException occurred: {ex.Message}");
+                    }
+                }
+            }
+        }
+        System.Console.WriteLine("Populating language_level table");
+        System.Console.WriteLine($"{rowsAffected} rows affected");
+    }
+
+
+    public void AddWorkHours()
+    {
+        List<int> hours = new List<int> { 100, 50, 25 };
+
+        int rowsAffected = 0;
+
+        DatabaseConnectionManager dbConnectionManager = new();
+
+        using (SqlConnection connection = dbConnectionManager.GetOpenConnection())
+        {
+            foreach (int h in hours)
+            {
+                WorkHours newHours = new WorkHours(h);
+                try
+                {
+                    string sqlcode = $"INSERT INTO work_hours(hours) VALUES (@Hours)";
+                    int count = connection.Execute(sqlcode, newHours);
+                    rowsAffected += count;
+                }
+                catch (System.Data.SqlClient.SqlException ex)
+                {
+                    if (ex.Number == 2601 || ex.Number == 2627)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    else
+                    {
+                        Console.WriteLine($"An SqlException occurred: {ex.Message}");
+                    }
+                }
+            }
+        }
+        System.Console.WriteLine("Populating workhours table");
+        System.Console.WriteLine($"{rowsAffected} rows affected");
+    }
+    public void AddLanguages()
+    {
+        List<string> languages = new List<string> {
+            "Swedish", "English", "Chinese", "German", "French", "Spanish",
+            "Danish", "Norweigan", "Finnish", "Italian", "Portuguese",
+            "Japanese", "Polish", "Dutch", "Other"
+            };
+
+        int rowsAffected = 0;
+
+        DatabaseConnectionManager dbConnectionManager = new();
+
+        using (SqlConnection connection = dbConnectionManager.GetOpenConnection())
+        {
+            foreach (string l in languages)
+            {
+                Language newLang = new Language(l);
+                try
+                {
+                    string sqlcode = $"INSERT INTO language(name) VALUES (@Name)";
+                    int count = connection.Execute(sqlcode, newLang);
+                    rowsAffected += count;
+                }
+                catch (System.Data.SqlClient.SqlException ex)
+                {
+                    if (ex.Number == 2601 || ex.Number == 2627)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    else
+                    {
+                        Console.WriteLine($"An SqlException occurred: {ex.Message}");
+                    }
+                }
+            }
+        }
+        System.Console.WriteLine("Populating language table");
+        System.Console.WriteLine($"{rowsAffected} rows affected");
+    }
+
+
 
     public void AddJobSeekers(int totalJobSeekers = 10)
     {
@@ -230,7 +378,7 @@ public class PopulateDB
         System.Console.WriteLine($"{rowsAffected} rows affected");
     }
 
-    public void AddJobEmployers(int totalEmployers = 10)
+    public void AddEmployers(int totalEmployers = 10)
     {
         DatabaseConnectionManager dbConnectionManager = new();
 
