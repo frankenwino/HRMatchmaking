@@ -1,3 +1,4 @@
+namespace Model;
 public class JobSeeker
 {
     public int Id { get; set; }
