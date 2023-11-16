@@ -38,24 +38,6 @@ public class DBSetup
         name VARCHAR(32) UNIQUE NOT NULL
     );";
 
-    /* private string createJobseekerTable = @"
-    CREATE TABLE jobseeker (
-        id INT PRIMARY KEY IDENTITY(1,1),
-        name VARCHAR(64) NOT NULL,
-        date_of_birth DATE NOT NULL,
-        person_number VARCHAR(12) UNIQUE NOT NULL,
-        city_id INT NOT NULL,
-        email VARCHAR(64),
-        telephone VARCHAR(32) NOT NULL,
-        FOREIGN KEY (city_id) REFERENCES city (id)
-    );"; */
-
-    /* private string createJobseekerTable = @"
-    CREATE TABLE jobseeker (
-        id INT PRIMARY KEY IDENTITY(1,1),
-        name VARCHAR(64) NOT NULL
-    );"; */
-
     private string createJobseekerTable = @"
     CREATE TABLE jobseeker (
         id INT PRIMARY KEY IDENTITY(1,1),
@@ -65,6 +47,7 @@ public class DBSetup
         city_id INT NOT NULL,
         email VARCHAR(64),
         telephone VARCHAR(32) NOT NULL,
+        FOREIGN KEY (city_id) REFERENCES city (id)
     );";
 
     private string createIndustryTable = @"
@@ -233,11 +216,11 @@ public class DBSetup
     {
         List<string> createTableSqlCommands = new();
 
-        // createTableSqlCommands.Add(createVehicleLicenseTable);
-        // createTableSqlCommands.Add(createCityTable);
+        createTableSqlCommands.Add(createVehicleLicenseTable);
+        createTableSqlCommands.Add(createCityTable);
         createTableSqlCommands.Add(createJobseekerTable);
-        // createTableSqlCommands.Add(createIndustryTable);
-        // createTableSqlCommands.Add(createEmployerTable);
+        createTableSqlCommands.Add(createIndustryTable);
+        createTableSqlCommands.Add(createEmployerTable);
         // createTableSqlCommands.Add(createJobHistoryTable);
         // createTableSqlCommands.Add(createSubjectTable);
         // createTableSqlCommands.Add(createEducationLevel);
