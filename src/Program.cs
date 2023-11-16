@@ -3,7 +3,7 @@ using UI;
 using Model;
 
 Console.Clear();
-// SetUpDB(); // Comment out after setting up DB connecting to the data base
+SetUpDB(); // Comment out after setting up DB connecting to the data base
 
 JobSeekerRepository jsr = new();
 
@@ -57,7 +57,13 @@ void SetUpDB()
     dbs.CreateAllTables();
 
     PopulateDB popDb = new();
-    popDb.AddJobSeekers();
+    popDb.AddCities();
+    popDb.AddIndustries();
+    popDb.AddVehicleLicenses();
+
+    popDb.AddJobSeekers(10);
+    popDb.AddJobEmployers(10);
+
 
     System.Console.WriteLine("Comment out the line calling SetUpDB() - on line 6 or so.");
     Environment.Exit(0);
