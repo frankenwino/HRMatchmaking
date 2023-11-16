@@ -24,12 +24,13 @@ public static class Create
         string name = ConsoleInput.GetString("Enter employer name");
         string organisationNumber = ConsoleInput.GetString("Enter organisation number");
         int industryId = ConsoleInput.GetInt("Enter industry id");
-        string industry = ConsoleInput.GetString("Enter industry");
+        // string industry = ConsoleInput.GetString("Enter industry");
         string email = ConsoleInput.GetString("Enter email");
         string city = ConsoleInput.GetString("Enter city");
         int cityId = ConsoleInput.GetInt("Enter city id");
 
-        Employer e = new Employer(name, organisationNumber, industry, industryId, email, city, cityId);
+        // Employer e = new Employer(name, organisationNumber, industry, industryId, email, city, cityId);
+        Employer e = new Employer(name, organisationNumber, industryId, email, cityId);
 
         return e;
     }
