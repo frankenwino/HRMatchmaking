@@ -1,5 +1,6 @@
 namespace UI;
 using ConsoleInputUtility;
+using Model;
 public class Menu
 {
     private JobSeekerRepository jsr;
